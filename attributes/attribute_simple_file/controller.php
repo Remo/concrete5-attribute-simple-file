@@ -4,6 +4,7 @@ namespace Concrete\Package\AttributeSimpleFile\Attribute\AttributeSimpleFile;
 
 use Database;
 use Concrete\Core\Attribute\Controller as AttributeTypeController;
+use Core;
 
 class Controller extends AttributeTypeController
 {
@@ -32,7 +33,8 @@ class Controller extends AttributeTypeController
 
         if ($avID) {
             $row = $db->fetchAssoc('SELECT fileName, uniqueKey FROM atSimpleFile WHERE avID = ?', [$avID]);
-            return '<a target="_blank" href="' . DIR_REL . '/application/files/simple_file_attribute/' . $row['uniqueKey'] . '-' . $row['fileName'] . '">' . $row['fileName'] . '</a>';
+            $link = Core::getApplicationURL() . DIR_REL . '/application/files/simple_file_attribute/' . $row['uniqueKey'] . '-' . $row['fileName'];
+            return '<a target="_blank" href="' . $link . '">' . $row['fileName'] . '</a>';
         }
     }
 
@@ -93,7 +95,8 @@ class Controller extends AttributeTypeController
             $ok = move_uploaded_file($tmpName, $directory . '/' . $filename);
         } else {
             if (file_exists($tmpName)) {
-                $ok = rename($tmpName, $directory . '/' . $filename);
+                $ok = copy($tmpName, $directory . '/' . $filename);
+                unlink($tmpName);
             }
         }
 
