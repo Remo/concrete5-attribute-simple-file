@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema version="0.3">
+    <table name="atSimpleFile">
+        <field name="avID" type="I">
+            <key/>
+            <default value="0"/>
+        </field>
+        <field name="uniqueKey" type="C" size="255"></field>
+        <field name="fileName" type="C" size="255"></field>
+    </table>
+</schema>
